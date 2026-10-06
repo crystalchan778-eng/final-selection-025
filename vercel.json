@@ -1,5 +1,19 @@
 {
   "rewrites": [
     { "source": "/", "destination": "/home.html" }
+  ],
+  "headers": [
+    {
+      "source": "/home.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/fit.css",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }
+      ]
+    }
   ]
 }
