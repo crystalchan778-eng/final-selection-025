@@ -12,17 +12,71 @@ body{display:flex;justify-content:center;align-items:flex-start}
 </style>
 </head>
 <body>
-<iframe id="game" src="/index.html?v=7" allow="autoplay; camera; microphone" title="Final Selection 026"></iframe>
+<iframe id="game" src="/index.html?v=8" allow="autoplay; camera; microphone" title="Final Selection 026"></iframe>
 <script>
 (function(){
  const frame=document.getElementById('game');
  frame.addEventListener('load',()=>{
    try{
+     const win=frame.contentWindow;
      const doc=frame.contentDocument;
-     if(!doc||doc.getElementById('phone-fit-v7')) return;
-     const link=doc.createElement('link');
-     link.id='phone-fit-v7'; link.rel='stylesheet'; link.href='/fit.css?v=7';
-     doc.head.appendChild(link);
+     if(!doc) return;
+
+     if(!doc.getElementById('phone-fit-v8')){
+       const link=doc.createElement('link');
+       link.id='phone-fit-v8'; link.rel='stylesheet'; link.href='/fit.css?v=8';
+       doc.head.appendChild(link);
+     }
+
+     /* iPhone Safari fix: full camera photos can exceed localStorage after the first shot.
+        Compress each capture before saving, and never let a storage quota error stop render(). */
+     win.save=function(){
+       try{ win.localStorage.setItem(win.KEY,JSON.stringify(win.S)); }
+       catch(err){
+         try{
+           const slim={...win.S,pics:{}};
+           win.localStorage.setItem(win.KEY,JSON.stringify(slim));
+         }catch(e){}
+       }
+     };
+
+     win.gotPhoto=function(k,input){
+       const f=input.files&&input.files[0];
+       if(!f) return;
+       const url=URL.createObjectURL(f);
+       const img=new Image();
+       img.onload=function(){
+         try{
+           const max=900;
+           let w=img.naturalWidth||img.width, h=img.naturalHeight||img.height;
+           const scale=Math.min(1,max/Math.max(w,h));
+           w=Math.max(1,Math.round(w*scale)); h=Math.max(1,Math.round(h*scale));
+           const c=doc.createElement('canvas'); c.width=w; c.height=h;
+           const ctx=c.getContext('2d'); ctx.drawImage(img,0,0,w,h);
+           let data=null;
+           try{ data=c.toDataURL('image/jpeg',0.70); }catch(e){}
+           if(data){
+             win.S.pics[k]=data;
+             win.save();
+             win.render();
+           }else{
+             const r=new FileReader();
+             r.onload=function(){win.S.pics[k]=r.result;win.save();win.render();};
+             r.readAsDataURL(f);
+           }
+         }finally{
+           URL.revokeObjectURL(url);
+           input.value='';
+         }
+       };
+       img.onerror=function(){
+         URL.revokeObjectURL(url);
+         const r=new FileReader();
+         r.onload=function(){win.S.pics[k]=r.result;win.save();win.render();input.value='';};
+         r.readAsDataURL(f);
+       };
+       img.src=url;
+     };
    }catch(e){console.error(e)}
  });
 })();
