@@ -12,7 +12,7 @@ body{display:flex;justify-content:center;align-items:flex-start}
 </style>
 </head>
 <body>
-<iframe id="game" src="/index.html?v=11" allow="autoplay; camera; microphone" title="Final Selection 026"></iframe>
+<iframe id="game" src="/index.html?v=12" allow="autoplay; camera; microphone" title="Final Selection 026"></iframe>
 <script>
 (function(){
  const frame=document.getElementById('game');
@@ -21,15 +21,15 @@ body{display:flex;justify-content:center;align-items:flex-start}
      const doc=frame.contentDocument;
      if(!doc) return;
 
-     if(!doc.getElementById('phone-fit-v11')){
+     if(!doc.getElementById('phone-fit-v12')){
        const link=doc.createElement('link');
-       link.id='phone-fit-v11'; link.rel='stylesheet'; link.href='/fit.css?v=11';
+       link.id='phone-fit-v12'; link.rel='stylesheet'; link.href='/fit.css?v=12';
        doc.head.appendChild(link);
      }
 
-     if(!doc.getElementById('camera-fix-v11')){
+     if(!doc.getElementById('game-fix-v12')){
        const fix=doc.createElement('script');
-       fix.id='camera-fix-v11';
+       fix.id='game-fix-v12';
        fix.textContent=`
 (function(){
   function refreshTaskProgress(){
@@ -66,7 +66,6 @@ body{display:flex;justify-content:center;align-items:flex-start}
   gotPhoto=function(k,input){
     const f=input.files&&input.files[0];
     if(!f)return;
-
     const finish=function(data){
       S.pics[k]=data;
       const shot=input.closest('.shot');
@@ -80,13 +79,11 @@ body{display:flex;justify-content:center;align-items:flex-start}
       try{save()}catch(e){}
       sync();
     };
-
     const fallback=function(){
       const r=new FileReader();
       r.onload=function(){finish(r.result)};
       r.readAsDataURL(f);
     };
-
     try{
       const url=URL.createObjectURL(f);
       const img=new Image();
@@ -106,6 +103,27 @@ body{display:flex;justify-content:center;align-items:flex-start}
       img.onerror=function(){URL.revokeObjectURL(url);fallback()};
       img.src=url;
     }catch(e){fallback()}
+  };
+
+  switchBgmForScene=async function(immediate=false){
+    if(!musicStarted||!musicEnabled)return;
+    const els=musicEls();
+    const first=els.g, second=els.t;
+    if(first){first.pause();first.currentTime=0;first.volume=0;}
+    if(!second)return;
+    try{
+      if(second.paused){second.volume=0;await second.play();}
+    }catch(e){return;}
+    if(immediate){second.volume=MUSIC_VOLUME;return;}
+    const from=second.volume||0;
+    const start=performance.now();
+    const dur=650;
+    function step(now){
+      const p=Math.min(1,(now-start)/dur);
+      second.volume=from+(MUSIC_VOLUME-from)*p;
+      if(p<1)requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
   };
 })();`;
        doc.body.appendChild(fix);
