@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Final Selection 026</title>
+<style>
+html,body{margin:0;width:100%;height:100%;background:#050609;overflow:hidden}
+#game{display:block;width:100%;height:100dvh;border:0;background:#050609}
+@supports not (height:100dvh){#game{height:100vh}}
+</style>
+</head>
+<body>
+<iframe id="game" src="/index.html" allow="autoplay; camera; microphone" title="Final Selection 026"></iframe>
+<script>
+(function(){
+  const frame=document.getElementById('game');
+  frame.addEventListener('load',()=>{
+    try{
+      const doc=frame.contentDocument;
+      if(!doc || doc.getElementById('iphone-scene1-fix')) return;
+      const style=doc.createElement('style');
+      style.id='iphone-scene1-fix';
+      style.textContent=`
+        @media (max-width:520px){
+          .scene.scene0:has(.closet.open){
+            min-height:1000px!important;
+            height:1000px!important;
+            aspect-ratio:auto!important;
+            overflow:hidden!important;
+          }
+        }
+        @media (max-width:390px){
+          .scene.scene0:has(.closet.open){
+            min-height:960px!important;
+            height:960px!important;
+          }
+        }
+      `;
+      doc.head.appendChild(style);
+    }catch(e){console.error('layout patch failed',e)}
+  });
+})();
+</script>
+</body>
+</html>
