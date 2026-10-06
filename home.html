@@ -12,7 +12,7 @@ body{display:flex;justify-content:center;align-items:flex-start}
 </style>
 </head>
 <body>
-<iframe id="game" src="/index.html?v=10" allow="autoplay; camera; microphone" title="Final Selection 026"></iframe>
+<iframe id="game" src="/index.html?v=11" allow="autoplay; camera; microphone" title="Final Selection 026"></iframe>
 <script>
 (function(){
  const frame=document.getElementById('game');
@@ -21,39 +21,46 @@ body{display:flex;justify-content:center;align-items:flex-start}
      const doc=frame.contentDocument;
      if(!doc) return;
 
-     if(!doc.getElementById('phone-fit-v10')){
+     if(!doc.getElementById('phone-fit-v11')){
        const link=doc.createElement('link');
-       link.id='phone-fit-v10'; link.rel='stylesheet'; link.href='/fit.css?v=10';
+       link.id='phone-fit-v11'; link.rel='stylesheet'; link.href='/fit.css?v=11';
        doc.head.appendChild(link);
      }
 
-     if(!doc.getElementById('camera-fix-v10')){
+     if(!doc.getElementById('camera-fix-v11')){
        const fix=doc.createElement('script');
-       fix.id='camera-fix-v10';
+       fix.id='camera-fix-v11';
        fix.textContent=`
 (function(){
-  function updateScene2Progress(){
-    if(S.i!==1)return;
-    const keys=['blue','pink','yellow','green'];
-    const n=keys.filter(k=>S.pics[k]).length;
-    const actions=document.querySelector('.scene1 .actions');
-    if(actions){
-      const buttons=actions.querySelectorAll('button');
-      const nextBtn=buttons[buttons.length-1];
-      if(nextBtn) nextBtn.disabled=(n!==4);
+  function refreshTaskProgress(){
+    if(S.i===1){
+      const keys=['blue','pink','yellow','green'];
+      const n=keys.filter(k=>S.pics[k]).length;
+      const actions=document.querySelector('.scene1 .actions');
+      if(actions){
+        const buttons=actions.querySelectorAll('button');
+        const nextBtn=buttons[buttons.length-1];
+        if(nextBtn) nextBtn.disabled=(n!==4);
+      }
+      const hint=document.querySelector('.scene1 .centerHint');
+      if(hint) hint.textContent=n<4?'尚未完成：'+(4-n)+' 个呼吸痕迹。':'四式呼吸痕迹已完成。';
     }
-    let hint=document.querySelector('.scene1 .centerHint');
-    if(n<4){
-      if(hint) hint.textContent='尚未完成：'+(4-n)+' 个呼吸痕迹。';
-    }else if(hint){
-      hint.textContent='四式呼吸痕迹已完成。';
+
+    if(S.i===2){
+      const keys=['today','her','us'];
+      const n=keys.filter(k=>S.pics[k]).length;
+      const named=((S.a.usname||'').trim().length>0);
+      const nextBtn=document.getElementById('nextBtn');
+      if(nextBtn) nextBtn.disabled=!(n===3&&named);
+      const hint=document.querySelector('.scene2 .centerHint');
+      if(hint) hint.textContent='观察记录：照片 '+n+'/3 · 命名 '+(named?'完成':'未完成');
     }
   }
 
   const originalSync=typeof sync==='function'?sync:null;
   sync=function(){
     if(originalSync) originalSync();
-    updateScene2Progress();
+    refreshTaskProgress();
   };
 
   gotPhoto=function(k,input){
