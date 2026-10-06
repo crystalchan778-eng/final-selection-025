@@ -2,30 +2,104 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
 <title>Final Selection 026</title>
 <style>
 html,body{margin:0;width:100%;height:100%;background:#050609;overflow:hidden}
-body{display:grid;place-items:center}
-#game{display:block;width:100%;height:100svh;border:0;background:#050609}
-@supports not (height:100svh){#game{height:100vh}}
+body{display:flex;align-items:flex-start;justify-content:center}
+#game{display:block;border:0;background:#050609;width:min(100vw,calc(100svh * 9 / 16));height:min(100svh,calc(100vw * 16 / 9));max-width:520px}
+@supports not (height:100svh){#game{width:min(100vw,calc(100vh * 9 / 16));height:min(100vh,calc(100vw * 16 / 9))}}
 </style>
 </head>
 <body>
-<iframe id="game" src="/index.html" allow="autoplay; camera; microphone" title="Final Selection 026"></iframe>
+<iframe id="game" src="/index.html?v=4" allow="autoplay; camera; microphone" title="Final Selection 026"></iframe>
 <script>
 (function(){
   const frame=document.getElementById('game');
   frame.addEventListener('load',()=>{
     try{
+      const win=frame.contentWindow;
       const doc=frame.contentDocument;
-      if(!doc || doc.getElementById('fit-9x16-css')) return;
-      const link=doc.createElement('link');
-      link.id='fit-9x16-css';
-      link.rel='stylesheet';
-      link.href='/fit.css?v=2';
-      doc.head.appendChild(link);
-    }catch(e){console.error('9:16 layout patch failed',e)}
+      if(!doc) return;
+
+      const style=doc.createElement('style');
+      style.id='hard-fit-9x16-v4';
+      style.textContent=`
+        html,body{margin:0!important;width:100%!important;height:100%!important;overflow:hidden!important;background:#050609!important}
+        body{overflow:hidden!important}
+        .app{width:100%!important;height:100%!important;min-height:0!important;max-width:none!important;margin:0!important;overflow:hidden!important;position:relative!important}
+        .scene{width:100%!important;height:100%!important;min-height:0!important;aspect-ratio:auto!important;overflow:hidden!important;position:relative!important}
+        .blackbars:before,.blackbars:after{height:22px!important}
+        #resetBtn{top:10px!important;left:10px!important;padding:7px 10px!important;font-size:9px!important}
+        #musicToggle{top:48px!important;right:10px!important;padding:6px 8px!important;min-width:50px!important;font-size:8px!important}
+        .hud{padding:14px 14px 0 102px!important}
+        .hudTop{font-size:8.5px!important}.hp{margin-top:6px!important}
+        .location{top:64px!important;left:18px!important;width:64%!important;max-width:64%!important}
+        .locKicker{font-size:7.5px!important;letter-spacing:.25em!important}
+        .locTitle{font-size:27px!important;line-height:1.02!important;margin-top:5px!important}
+        .locSub{font-size:7.5px!important;margin-top:5px!important;letter-spacing:.18em!important}
+        .objective{left:12px!important;right:auto!important;bottom:auto!important;margin:0!important;transform-origin:top left!important;overflow:visible!important}
+        .objHead{padding:8px 10px!important;gap:8px!important}
+        .stageNo{font-size:7px!important}.objTitle{font-size:18px!important;margin-top:2px!important}.xp{font-size:9px!important}
+        .objBody{padding:8px 10px!important}
+        .story{font-size:10.2px!important;line-height:1.35!important}
+        .hint{font-size:9px!important;line-height:1.3!important;padding:5px 7px!important;margin-top:5px!important}
+        .actions{margin-top:5px!important;gap:5px!important;flex-wrap:nowrap!important}
+        .btn{padding:7px 8px!important;min-height:29px!important;font-size:9.5px!important;line-height:1.15!important}
+        .field{margin-top:6px!important}.field label{font-size:9px!important;margin-bottom:3px!important}
+        .field input,.field textarea,.q textarea{padding:6px 7px!important;font-size:9.5px!important}
+        .q{padding:3px 0!important}.q p{font-size:9px!important;line-height:1.2!important;margin-bottom:3px!important}
+        .q textarea{min-height:28px!important;height:28px!important}
+        .scene.scene0 .location{top:68px!important}
+        .scene.scene0 .objective{top:158px!important}
+        .scene.scene0 .story{font-size:10px!important;line-height:1.3!important;padding:0!important}
+        .scene.scene0 .closetPrompt{font-size:10px!important;margin:4px 0!important}
+        .scene.scene0 .closet{height:112px!important;margin-top:0!important}
+        .scene.scene0 .closetText{font-size:9.4px!important;line-height:1.3!important;padding:9px!important}
+        .scene.scene0 .sceneCrow{width:50px!important;max-width:50px!important}
+        .scene.scene1 .objective{top:154px!important}.scene.scene1 .shot .ph{height:48px!important}.scene.scene1 .shots{gap:5px!important;margin-top:5px!important}.scene.scene1 .cam{padding:5px!important;font-size:8px!important;margin-top:3px!important}
+        .scene.scene2 .objective{top:138px!important}.scene.scene2 .shot .ph{height:44px!important}.scene.scene2 .shots{gap:5px!important;margin-top:5px!important}.scene.scene2 .cam{padding:5px!important;font-size:8px!important;margin-top:3px!important}
+        .scene.scene3 .objective{top:136px!important}
+        .scene.scene4 .objective{top:142px!important}.scene.scene4 .ninjaArena{height:165px!important}.scene.scene4 .gamePrompt{padding:7px 8px!important}.scene.scene4 .gamePrompt b{font-size:11px!important}.scene.scene4 .gamePrompt span{font-size:8px!important}
+        .scene.scene5 .objective{top:160px!important}.scene.scene5 .finalField textarea{height:60px!important;min-height:60px!important}
+        .scene.scene6 .objective{top:142px!important}.scene.scene6 .chestArea{height:80px!important;min-height:80px!important}.scene.scene6 .treasureChest{transform:translateY(-14px) scale(.62)!important}.scene.scene6 .codePanel,.scene.scene6 .treasureMap{padding:7px 8px!important}.scene.scene6 #chestCode{font-size:18px!important;padding:6px!important;width:100px!important}.scene.scene6 .mapMsg{font-size:9px!important;line-height:1.3!important}.scene.scene6 .mapPlace{font-size:14px!important}
+      `;
+      doc.head.appendChild(style);
+
+      function fitScene(){
+        const scene=doc.querySelector('.scene');
+        const obj=doc.querySelector('.objective');
+        if(!scene||!obj) return;
+        const h=frame.clientHeight;
+        scene.style.setProperty('height',h+'px','important');
+        scene.style.setProperty('min-height','0','important');
+        obj.style.removeProperty('transform');
+        obj.style.removeProperty('width');
+        const top=parseFloat(win.getComputedStyle(obj).top)||140;
+        const available=Math.max(180,h-top-10);
+        const natural=obj.scrollHeight;
+        let scale=Math.min(1,available/natural);
+        if(scale<.72) scale=.72;
+        if(scale<.999){
+          obj.style.setProperty('width',`calc((100% - 24px) / ${scale})`,'important');
+          requestAnimationFrame(()=>{
+            const natural2=obj.scrollHeight;
+            const scale2=Math.min(1,available/natural2);
+            obj.style.setProperty('transform',`scale(${scale2})`,'important');
+          });
+        }else{
+          obj.style.setProperty('width','calc(100% - 24px)','important');
+          obj.style.setProperty('transform','scale(1)','important');
+        }
+      }
+
+      const observer=new MutationObserver(()=>requestAnimationFrame(fitScene));
+      observer.observe(doc.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style']});
+      win.addEventListener('resize',fitScene);
+      setTimeout(fitScene,60);
+      setTimeout(fitScene,350);
+      setTimeout(fitScene,900);
+    }catch(e){console.error('9:16 fit failed',e)}
   });
 })();
 </script>
