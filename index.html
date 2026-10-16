@@ -6,22 +6,52 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#fff6ee">
 <title>寻找藏起的你 · 生日寻宝</title>
-<style>
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#171717}#game{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:#171717}
-</style>
+<style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#171717}#game{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:#171717}</style>
 </head>
 <body>
-<iframe id="game" src="/Index.html?v=line-dog-answer-fix-1" allow="autoplay; fullscreen"></iframe>
+<iframe id="game" src="/Index.html?v=line-dog-ui-fix-3" allow="autoplay; fullscreen"></iframe>
 <script>
 (function(){
   const frame=document.getElementById('game');
   frame.addEventListener('load',function(){
     try{
       const d=frame.contentDocument;
+      const style=d.createElement('style');
+      style.textContent=`
+/* Game 2 alignment fix: preserve approved artwork, only place live fields on top */
+#g2 .g2-card{inset:0!important;left:0!important;top:0!important;width:100%!important;height:100%!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;pointer-events:none!important}
+#g2 .g2-title,#g2 .g2-group h3,#g2 .wordrow span{display:none!important}
+#g2 .g2-groups{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;display:block!important}
+#g2 .g2-group{position:absolute!important;top:35.8%!important;width:3.15%!important;height:29.2%!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;display:flex!important;flex-direction:column!important;pointer-events:none!important}
+#g2 #group1{left:43.15%!important}
+#g2 #group2{left:68.15%!important}
+#g2 .wordrow{flex:1 1 0!important;min-height:0!important;height:auto!important;padding:0!important;margin:0!important;border:0!important;display:flex!important;align-items:center!important;justify-content:center!important;pointer-events:none!important}
+#g2 .letterBox{width:88%!important;height:76%!important;aspect-ratio:auto!important;padding:0!important;margin:0!important;border:2px solid #b9805e!important;border-radius:7px!important;background:rgba(255,252,244,.96)!important;font-size:clamp(14px,1.55vw,22px)!important;line-height:1!important;pointer-events:auto!important;box-shadow:none!important;color:#5a3327!important}
+#g2 .g2-output{position:absolute!important;left:38.45%!important;top:68.15%!important;width:44.65%!important;height:5.55%!important;margin:0!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:4.15%!important;align-items:stretch!important;justify-content:stretch!important;pointer-events:none!important}
+#g2 .outgrp{width:100%!important;height:100%!important;display:grid!important;grid-template-columns:repeat(7,1fr)!important;gap:1.8%!important}
+#g2 .outtile{border:0!important;border-radius:0!important;background:transparent!important;font-size:clamp(14px,1.7vw,24px)!important;color:#6b3827!important;box-shadow:none!important}
+#g2 .g2-submit{left:49.0%!important;top:75.45%!important;width:22.8%!important;height:6.75%!important;border:0!important;background:rgba(255,255,255,.001)!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;font-size:0!important;z-index:40!important}
+`;
+      d.head.appendChild(style);
       const s=d.createElement('script');
-      s.textContent="try{g1[3].answers=['如胶似漆'];}catch(e){console.error(e)}";
+      s.textContent=`
+try{
+  g1[3].answers=['如胶似漆'];
+  state.g1=0;
+  state.g3=0;
+  state.screen='cover';
+  save();
+  go('cover');
+  window.__startBirthdayGame=(function(original){
+    return function(e){
+      try{state.g1=0;state.g3=0;state.screen='g1';save();}catch(_){}
+      return original ? original(e) : false;
+    };
+  })(window.__startBirthdayGame);
+}catch(e){console.error(e)}
+`;
       d.body.appendChild(s);
-    }catch(e){console.error('answer patch failed',e)}
+    }catch(e){console.error('line dog patch failed',e)}
   });
 })();
 </script>
