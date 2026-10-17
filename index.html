@@ -9,7 +9,7 @@
 <style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#171717}#game{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:#171717}</style>
 </head>
 <body>
-<iframe id="game" src="/Index.html?v=line-dog-ui-fix-8" allow="autoplay; fullscreen"></iframe>
+<iframe id="game" src="/Index.html?v=line-dog-ui-fix-9" allow="autoplay; fullscreen"></iframe>
 <script>
 (function(){
   const frame=document.getElementById('game');
@@ -36,20 +36,25 @@
 .invisibleArtworkHit,.invisibleArtworkHit:hover,.invisibleArtworkHit:active,.invisibleArtworkHit:focus{background:rgba(255,255,255,.001)!important;background-image:none!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important}
 .invisibleArtworkHit::before,.invisibleArtworkHit::after{display:none!important;content:none!important}
 
-/* GAME 3 — keep the title visible by moving the question card slightly lower. */
-#g3 .g3-card{position:absolute!important;z-index:14!important;left:21.5%!important;top:29.4%!important;width:56.2%!important;height:58.2%!important;box-sizing:border-box!important;overflow:hidden!important;background:#fffbee!important;border-radius:36px!important;padding:2.15% 4% 2.2%!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;pointer-events:auto!important}
+/* GAME 3 — normal questions sit slightly lower so the title remains visible. */
+#g3 .g3-card{position:absolute!important;z-index:14!important;left:21.5%!important;top:29.4%!important;width:56.2%!important;height:57.8%!important;box-sizing:border-box!important;overflow:hidden!important;background:#fffbee!important;border-radius:36px!important;padding:2.05% 4% 2.1%!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;pointer-events:auto!important}
 #g3 .g3-media{flex:0 0 47%!important;min-height:0!important;position:relative!important;z-index:16!important}
 #g3 .g3-options{position:relative!important;z-index:18!important;pointer-events:auto!important}
 #g3 .g3-option{position:relative!important;z-index:19!important;pointer-events:auto!important;touch-action:manipulation!important}
-#g3 #g3Submit{position:absolute!important;z-index:40!important;left:38%!important;top:85.1%!important;width:24%!important;height:8.1%!important;background:rgba(255,255,255,.001)!important;background-image:none!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;font-size:0!important;pointer-events:auto!important;touch-action:manipulation!important}
+
+/* Q2 is special: move the whole live card slightly UP, but crop the portrait LOWER so the mouth/lips are in frame. */
+#g3.g3-q2 .g3-card{top:27.6%!important;height:59.6%!important;padding-top:1.65%!important}
+#g3.g3-q2 .g3-media{flex:0 0 50%!important;transform:translateY(-2.5%)!important;transform-origin:center top!important;z-index:24!important}
+#g3.g3-q2 .g3-media video{object-fit:cover!important;object-position:center 68%!important;transform:none!important}
+#g3.g3-q2 .g3-question{margin-top:0!important;margin-bottom:1.0%!important}
+#g3.g3-q2 .g3-options.two{gap:2.1%!important}
+
+/* Make the real submit button visible, BELOW the card, and genuinely tappable. */
+#g3 #g3Submit{position:absolute!important;z-index:100!important;left:37.3%!important;top:88.2%!important;width:25.4%!important;height:6.8%!important;box-sizing:border-box!important;background:linear-gradient(#ff9fb5,#ff7598)!important;background-image:linear-gradient(#ff9fb5,#ff7598)!important;border:3px solid #744047!important;border-radius:999px!important;box-shadow:0 4px 0 #a84e67,0 8px 16px rgba(85,38,53,.18)!important;color:#fff!important;text-shadow:0 1px 0 rgba(0,0,0,.14)!important;font-size:clamp(17px,2.15vw,29px)!important;font-weight:1000!important;pointer-events:auto!important;touch-action:manipulation!important;-webkit-appearance:none!important;appearance:none!important}
 #g3 #g3Submit::before,#g3 #g3Submit::after{display:none!important;content:none!important}
 #g3 #g3Back{z-index:45!important;background:rgba(255,255,255,.001)!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;pointer-events:auto!important}
 #g3 #g3Badge{z-index:45!important;background:transparent!important;border:0!important;box-shadow:none!important;color:#17427b!important;font-weight:1000!important;pointer-events:none!important}
 #g3 #shells{display:none!important}
-
-/* GAME 3 Q2 video — lift the whole video window so the face/lips stay clearly visible for lip-reading. */
-#g3 .g3-card:has(video) .g3-media{transform:translateY(-10%)!important;transform-origin:center top!important;z-index:24!important}
-#g3 .g3-card:has(video) video{object-position:center 28%!important;transform:translateY(-2%)!important}
 `;
       d.head.appendChild(style);
 
@@ -91,6 +96,28 @@ try{
   hideHintButton();
   const mo=new MutationObserver(hideHintButton);
   mo.observe(document.body,{childList:true,subtree:true});
+
+  /* Apply a dedicated Q2 layout every time Game 3 re-renders. */
+  const originalRenderG3=renderG3;
+  renderG3=function(){
+    originalRenderG3();
+    const screen=document.querySelector('#g3');
+    if(screen) screen.classList.toggle('g3-q2',state.g3===1);
+    if(state.g3===1){
+      const v=document.querySelector('#lipVideo');
+      if(v){v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');v.muted=true;}
+    }
+  };
+
+  /* iPad touch fallback for the real pink submit button. */
+  const submit=document.querySelector('#g3Submit');
+  if(submit && !submit.dataset.ipadTouchFixed){
+    submit.dataset.ipadTouchFixed='1';
+    submit.addEventListener('touchend',function(e){
+      e.preventDefault();
+      if(typeof submit.onclick==='function') submit.onclick(e);
+    },{passive:false});
+  }
 }catch(e){console.error(e)}
 `;
       d.body.appendChild(s);
