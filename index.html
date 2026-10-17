@@ -9,7 +9,7 @@
 <style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#171717}#game{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:#171717}</style>
 </head>
 <body>
-<iframe id="game" src="/Index.html?v=line-dog-ui-fix-5" allow="autoplay; fullscreen"></iframe>
+<iframe id="game" src="/Index.html?v=line-dog-ui-fix-6" allow="autoplay; fullscreen"></iframe>
 <script>
 (function(){
   const frame=document.getElementById('game');
@@ -18,15 +18,23 @@
       const d=frame.contentDocument;
       const style=d.createElement('style');
       style.textContent=`
-/* Game 2 precise alignment */
+/* GAME 2 — clean the old numbered/boxed missing-letter area, then place the real inputs exactly on the original underscore positions */
 #g2 .g2-card{inset:0!important;left:0!important;top:0!important;width:100%!important;height:100%!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;pointer-events:none!important}
 #g2 .g2-title{display:none!important}
 #g2 .g2-groups{display:none!important}
+#g2 .g2CleanStrip{position:absolute!important;top:39.7%!important;width:4.15%!important;height:29.9%!important;background:rgba(255,249,232,.985)!important;z-index:30!important;pointer-events:none!important}
+#g2 .g2CleanStrip.s1{left:46.15%!important}
+#g2 .g2CleanStrip.s2{left:73.25%!important}
+#g2 .g2Underline{position:absolute!important;transform:translate(-50%,-50%)!important;width:1.18%!important;height:2px!important;background:#5a3327!important;border-radius:2px!important;z-index:31!important;pointer-events:none!important}
 #g2 .g2-output{position:absolute!important;left:38.05%!important;top:72.2%!important;width:53.0%!important;height:7.4%!important;margin:0!important;padding:1.45% 1.1%!important;box-sizing:border-box!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:3.2%!important;align-items:stretch!important;background:rgba(255,248,232,.98)!important;border:2px solid #c99b72!important;border-radius:16px!important;z-index:26!important;pointer-events:none!important}
 #g2 .outgrp{width:100%!important;height:100%!important;display:grid!important;grid-template-columns:repeat(7,1fr)!important;gap:1.8%!important;align-items:stretch!important}
 #g2 .outtile{display:flex!important;align-items:center!important;justify-content:center!important;border:2px solid #9a6244!important;border-radius:6px!important;background:#fffdf4!important;font-size:clamp(15px,1.55vw,23px)!important;font-weight:900!important;line-height:1!important;color:#5a3327!important;box-shadow:none!important;padding:0!important;margin:0!important;box-sizing:border-box!important}
 #g2 .g2-submit{position:absolute!important;left:51.9%!important;top:81.05%!important;width:24.1%!important;height:6.9%!important;border:0!important;background:rgba(255,255,255,.001)!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;font-size:0!important;z-index:40!important;pointer-events:auto!important}
 #g2 .preciseG2Input{position:absolute!important;transform:translate(-50%,-50%)!important;width:2.25%!important;height:3.6%!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important;text-align:center!important;font-size:clamp(16px,1.6vw,24px)!important;font-weight:900!important;line-height:1!important;color:#5a3327!important;z-index:35!important;pointer-events:auto!important;caret-color:#5a3327!important}
+
+/* Game 1 hint — keep the artwork button only. The real button becomes a transparent tap target instead of a second pink overlay. */
+.invisibleArtworkHit,.invisibleArtworkHit:hover,.invisibleArtworkHit:active,.invisibleArtworkHit:focus{background:rgba(255,255,255,.001)!important;background-image:none!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important}
+.invisibleArtworkHit::before,.invisibleArtworkHit::after{display:none!important;content:none!important}
 `;
       d.head.appendChild(style);
 
@@ -47,19 +55,37 @@ try{
     };
   })(window.__startBirthdayGame);
 
-  /* Move the real Game 2 inputs out of the flex rows and place them exactly over the printed underscores. */
   const g2el=document.querySelector('#g2');
-  const ys=[41.943,46.087,50.276,54.466,58.711,62.937,67.081];
-  [1,2].forEach(function(group){
-    const x=group===1?48.343:75.518;
-    const inputs=[...document.querySelectorAll('.letterBox[data-group="'+group+'"]')];
-    inputs.forEach(function(inp,i){
-      g2el.appendChild(inp);
-      inp.classList.add('preciseG2Input');
-      inp.style.left=x+'%';
-      inp.style.top=ys[i]+'%';
+  if(g2el){
+    /* cover the old number + square-box columns without touching the word text */
+    ['s1','s2'].forEach(function(c){const strip=document.createElement('div');strip.className='g2CleanStrip '+c;g2el.appendChild(strip);});
+
+    /* exact centres of the approved underscores in the 1448×1086 artwork */
+    const ys=[41.943,46.087,50.276,54.466,58.711,62.937,67.081];
+    [48.343,75.518].forEach(function(x){ys.forEach(function(y){const u=document.createElement('div');u.className='g2Underline';u.style.left=x+'%';u.style.top=(y+1.28)+'%';g2el.appendChild(u);});});
+
+    [1,2].forEach(function(group){
+      const x=group===1?48.343:75.518;
+      const inputs=[...document.querySelectorAll('.letterBox[data-group="'+group+'"]')];
+      inputs.forEach(function(inp,i){
+        g2el.appendChild(inp);
+        inp.classList.add('preciseG2Input');
+        inp.style.left=x+'%';
+        inp.style.top=ys[i]+'%';
+      });
     });
-  });
+  }
+
+  /* Remove the duplicate visible button on the fridge/cupboard hint screen but keep its click action. */
+  const hideHintButton=function(){
+    [...document.querySelectorAll('button,a,[role="button"]')].forEach(function(el){
+      const t=(el.textContent||'').replace(/\\s+/g,'');
+      if(t.includes('开始通往哪里了')) el.classList.add('invisibleArtworkHit');
+    });
+  };
+  hideHintButton();
+  const mo=new MutationObserver(hideHintButton);
+  mo.observe(document.body,{childList:true,subtree:true});
 }catch(e){console.error(e)}
 `;
       d.body.appendChild(s);
