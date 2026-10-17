@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>寻找藏起的你 · Locked Game 4</title>
+<style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#171717}#outer{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}</style>
+</head>
+<body>
+<iframe id="outer" src="/index.html?v=line-dog-lock-45184"></iframe>
+<script>
+(function(){
+  const outer=document.getElementById('outer');
+  function patchGame4(){
+    try{
+      const wrapper=outer.contentDocument;
+      if(!wrapper) return false;
+      const innerFrame=wrapper.getElementById('game');
+      if(!innerFrame || !innerFrame.contentDocument) return false;
+      const d=innerFrame.contentDocument;
+      const g4=d.querySelector('#g4');
+      if(!g4) return false;
+
+      if(!d.getElementById('g4UniqueLockStyle')){
+        const st=d.createElement('style');
+        st.id='g4UniqueLockStyle';
+        st.textContent=`
+          #g4 .g4UniqueClue45184{position:absolute!important;left:39.5%!important;top:70.0%!important;width:43.5%!important;height:4.5%!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0 1%!important;box-sizing:border-box!important;border-radius:999px!important;background:rgba(255,246,213,.98)!important;border:1.5px solid rgba(190,139,64,.55)!important;color:#5a3327!important;font-size:clamp(10px,1.05vw,15px)!important;font-weight:800!important;z-index:70!important;pointer-events:none!important;white-space:nowrap!important}
+        `;
+        d.head.appendChild(st);
+      }
+
+      if(!g4.querySelector('.g4UniqueClue45184')){
+        const clue=d.createElement('div');
+        clue.className='g4UniqueClue45184';
+        clue.textContent='额外线索：01364 — 2个数字正确，1个位置正确';
+        g4.appendChild(clue);
+      }
+
+      const inputs=[...d.querySelectorAll('#g4Boxes input')];
+      const submit=d.querySelector('#g4Submit');
+      if(submit){
+        submit.onclick=function(){
+          const code=inputs.map(x=>x.value).join('');
+          if(code.length<5){ if(typeof d.defaultView.toast==='function') d.defaultView.toast('先填完 5 位数字'); return false; }
+          if(code!=='45184'){ if(typeof d.defaultView.toast==='function') d.defaultView.toast('密码不对，再看看线索'); return false; }
+          if(typeof d.defaultView.go==='function') d.defaultView.go('g4hint');
+          return false;
+        };
+      }
+      return true;
+    }catch(e){return false;}
+  }
+
+  outer.addEventListener('load',function(){
+    let n=0;
+    const timer=setInterval(function(){
+      if(patchGame4() || ++n>80) clearInterval(timer);
+    },250);
+  });
+})();
+</script>
+</body>
+</html>
