@@ -9,7 +9,7 @@
 <style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#171717}#game{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:#171717}</style>
 </head>
 <body>
-<iframe id="game" src="/Index.html?v=line-dog-ui-fix-7" allow="autoplay; fullscreen"></iframe>
+<iframe id="game" src="/Index.html?v=line-dog-ui-fix-8" allow="autoplay; fullscreen"></iframe>
 <script>
 (function(){
   const frame=document.getElementById('game');
@@ -18,7 +18,7 @@
       const d=frame.contentDocument;
       const style=d.createElement('style');
       style.textContent=`
-/* GAME 2 — clean the old numbered/boxed missing-letter area, then place the real inputs exactly on the original underscore positions */
+/* GAME 2 */
 #g2 .g2-card{inset:0!important;left:0!important;top:0!important;width:100%!important;height:100%!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;pointer-events:none!important}
 #g2 .g2-title{display:none!important}
 #g2 .g2-groups{display:none!important}
@@ -32,13 +32,13 @@
 #g2 .g2-submit{position:absolute!important;left:51.9%!important;top:81.05%!important;width:24.1%!important;height:6.9%!important;border:0!important;background:rgba(255,255,255,.001)!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;font-size:0!important;z-index:40!important;pointer-events:auto!important}
 #g2 .preciseG2Input{position:absolute!important;transform:translate(-50%,-50%)!important;width:2.25%!important;height:3.6%!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important;text-align:center!important;font-size:clamp(16px,1.6vw,24px)!important;font-weight:900!important;line-height:1!important;color:#5a3327!important;z-index:35!important;pointer-events:auto!important;caret-color:#5a3327!important}
 
-/* Game 1 hint — keep the artwork button only. The real button becomes a transparent tap target instead of a second pink overlay. */
+/* Game 1 hint */
 .invisibleArtworkHit,.invisibleArtworkHit:hover,.invisibleArtworkHit:active,.invisibleArtworkHit:focus{background:rgba(255,255,255,.001)!important;background-image:none!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important}
 .invisibleArtworkHit::before,.invisibleArtworkHit::after{display:none!important;content:none!important}
 
-/* GAME 3 — the original live card was missing position:absolute, so it flowed into the upper-left and the visible artwork buttons were not the real controls. */
-#g3 .g3-card{position:absolute!important;z-index:14!important;left:21.5%!important;top:26.4%!important;width:56.2%!important;height:61%!important;box-sizing:border-box!important;overflow:hidden!important;background:#fffbee!important;border-radius:36px!important;padding:2.6% 4% 2.7%!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;pointer-events:auto!important}
-#g3 .g3-media{flex:0 0 49%!important;min-height:0!important}
+/* GAME 3 — keep the title visible by moving the question card slightly lower. */
+#g3 .g3-card{position:absolute!important;z-index:14!important;left:21.5%!important;top:29.4%!important;width:56.2%!important;height:58.2%!important;box-sizing:border-box!important;overflow:hidden!important;background:#fffbee!important;border-radius:36px!important;padding:2.15% 4% 2.2%!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;pointer-events:auto!important}
+#g3 .g3-media{flex:0 0 47%!important;min-height:0!important;position:relative!important;z-index:16!important}
 #g3 .g3-options{position:relative!important;z-index:18!important;pointer-events:auto!important}
 #g3 .g3-option{position:relative!important;z-index:19!important;pointer-events:auto!important;touch-action:manipulation!important}
 #g3 #g3Submit{position:absolute!important;z-index:40!important;left:38%!important;top:85.1%!important;width:24%!important;height:8.1%!important;background:rgba(255,255,255,.001)!important;background-image:none!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;font-size:0!important;pointer-events:auto!important;touch-action:manipulation!important}
@@ -46,6 +46,10 @@
 #g3 #g3Back{z-index:45!important;background:rgba(255,255,255,.001)!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;pointer-events:auto!important}
 #g3 #g3Badge{z-index:45!important;background:transparent!important;border:0!important;box-shadow:none!important;color:#17427b!important;font-weight:1000!important;pointer-events:none!important}
 #g3 #shells{display:none!important}
+
+/* GAME 3 Q2 video — lift the whole video window so the face/lips stay clearly visible for lip-reading. */
+#g3 .g3-card:has(video) .g3-media{transform:translateY(-10%)!important;transform-origin:center top!important;z-index:24!important}
+#g3 .g3-card:has(video) video{object-position:center 28%!important;transform:translateY(-2%)!important}
 `;
       d.head.appendChild(style);
 
