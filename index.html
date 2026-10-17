@@ -9,7 +9,7 @@
 <style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#171717}#game{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:#171717}</style>
 </head>
 <body>
-<iframe id="game" src="/Index.html?v=line-dog-ui-fix-12" allow="autoplay; fullscreen"></iframe>
+<iframe id="game" src="/Index.html?v=line-dog-ui-fix-13" allow="autoplay; fullscreen"></iframe>
 <script>
 (function(){
   const frame=document.getElementById('game');
@@ -18,7 +18,7 @@
       const d=frame.contentDocument;
       const style=d.createElement('style');
       style.textContent=`
-/* GAME 2 — keep previous alignment patch */
+/* GAME 2 */
 #g2 .g2-card{inset:0!important;left:0!important;top:0!important;width:100%!important;height:100%!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;pointer-events:none!important}
 #g2 .g2-title{display:none!important}
 #g2 .g2-groups{display:none!important}
@@ -36,7 +36,7 @@
 .invisibleArtworkHit,.invisibleArtworkHit:hover,.invisibleArtworkHit:active,.invisibleArtworkHit:focus{background:rgba(255,255,255,.001)!important;background-image:none!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important}
 .invisibleArtworkHit::before,.invisibleArtworkHit::after{display:none!important;content:none!important}
 
-/* GAME 3 base */
+/* GAME 3 */
 #g3 .g3-card{position:absolute!important;z-index:14!important;left:21.5%!important;top:29.2%!important;width:56.2%!important;height:55.2%!important;box-sizing:border-box!important;overflow:hidden!important;background:#fffbee!important;border-radius:36px!important;padding:1.65% 4% 1.55%!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;pointer-events:auto!important}
 #g3 .g3-media{flex:0 0 45%!important;min-height:0!important;position:relative!important;z-index:16!important}
 #g3 .g3-question{margin-top:.7%!important;margin-bottom:.55%!important}
@@ -51,8 +51,6 @@
 #g3.g3-q2 .videoToggle.videoPlaying{display:none!important}
 #g3.g3-q2 .mutePill{bottom:2%!important;right:2%!important;font-size:clamp(10px,1.05vw,15px)!important;padding:.35em .65em!important;opacity:.78!important}
 #g3.g3-q3 .g3-media img{object-fit:cover!important;object-position:center 48%!important}
-
-/* Q5 + Q6 split layout */
 #g3.g3-q5 .g3-card,#g3.g3-q6 .g3-card{left:20.3%!important;top:28.2%!important;width:59.4%!important;height:56.4%!important;padding:2.0% 2.1%!important;display:grid!important;grid-template-columns:43% 53%!important;grid-template-rows:auto 1fr!important;grid-template-areas:"media question" "media options"!important;column-gap:4%!important;row-gap:2%!important;align-items:stretch!important;overflow:hidden!important}
 #g3.g3-q5 .g3-media,#g3.g3-q6 .g3-media{grid-area:media!important;width:100%!important;height:100%!important;min-height:0!important;display:flex!important;align-items:center!important;justify-content:center!important;background:#f3eadc!important;border-radius:22px!important;overflow:hidden!important;border:2px solid rgba(54,139,202,.45)!important}
 #g3.g3-q5 .g3-media img,#g3.g3-q6 .g3-media img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center center!important;background:#f3eadc!important}
@@ -64,19 +62,18 @@
 #g3 #g3Back{z-index:45!important;background:rgba(255,255,255,.001)!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;pointer-events:auto!important}
 #g3 #shells{display:none!important}
 
-/* GAME 4 — use ONLY the approved artwork visually. Remove every duplicate live layer. */
-#g4 .badge{display:none!important}
+/* GAME 4 — artwork only; remove every live duplicate layer. */
+#g4 > .badge,#g4 .badge{display:none!important}
 #g4 .g4-card{position:absolute!important;inset:0!important;left:0!important;top:0!important;width:100%!important;height:100%!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important;pointer-events:none!important}
 #g4 #codeTop,#g4 #clues{display:none!important}
-#g4 .g4-entry{position:absolute!important;inset:0!important;left:0!important;top:0!important;width:100%!important;height:100%!important;margin:0!important;padding:0!important;display:block!important;pointer-events:none!important}
-/* The five REAL inputs sit inside the five dashed boxes already drawn in the artwork. */
-#g4 #g4Boxes{position:absolute!important;left:35.5%!important;top:75.7%!important;width:29.5%!important;height:8.7%!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:2.3%!important;z-index:50!important;pointer-events:auto!important}
-#g4 #g4Boxes input{width:100%!important;height:100%!important;min-width:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important;text-align:center!important;font-size:clamp(20px,2.45vw,32px)!important;font-weight:900!important;line-height:1!important;color:#5a3327!important;caret-color:#5a3327!important;pointer-events:auto!important;touch-action:manipulation!important}
-/* The artwork already contains the pink submit button; this is only its invisible tap target. */
-#g4 #g4Submit{position:absolute!important;left:65.3%!important;top:75.4%!important;width:16.4%!important;height:9.2%!important;margin:0!important;padding:0!important;border:0!important;border-radius:999px!important;background:rgba(255,255,255,.001)!important;background-image:none!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;font-size:0!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important;z-index:55!important;pointer-events:auto!important;touch-action:manipulation!important}
+#g4 .g4-entry{position:absolute!important;inset:0!important;left:0!important;top:0!important;width:100%!important;height:100%!important;margin:0!important;padding:0!important;display:block!important;background:transparent!important;pointer-events:none!important}
+/* Five real numeric inputs, exactly inside the five dashed boxes printed in the artwork. */
+#g4 #g4Boxes{position:absolute!important;left:35.6%!important;top:80.05%!important;width:29.7%!important;height:9.55%!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:2.35%!important;z-index:80!important;pointer-events:auto!important}
+#g4 #g4Boxes input{width:100%!important;height:100%!important;min-width:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important;text-align:center!important;font-size:clamp(20px,2.35vw,32px)!important;font-weight:900!important;line-height:1!important;color:#5a3327!important;caret-color:#5a3327!important;pointer-events:auto!important;touch-action:manipulation!important}
+/* Pink button already exists in the artwork; this is only the invisible hit area. */
+#g4 #g4Submit{position:absolute!important;left:67.4%!important;top:79.45%!important;width:14.8%!important;height:10.6%!important;margin:0!important;padding:0!important;border:0!important;border-radius:999px!important;background:rgba(255,255,255,.001)!important;background-image:none!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;font-size:0!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important;z-index:85!important;pointer-events:auto!important;touch-action:manipulation!important}
 #g4 #g4Submit::before,#g4 #g4Submit::after{display:none!important;content:none!important}
-/* Artwork already has the back icon too. Keep the real button tappable but invisible. */
-#g4 .back{background:rgba(255,255,255,.001)!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;z-index:60!important}
+#g4 .back{background:rgba(255,255,255,.001)!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;z-index:90!important;pointer-events:auto!important}
 `;
       d.head.appendChild(style);
 
@@ -141,18 +138,38 @@ try{
   };
 
   const submit=document.querySelector('#g3Submit');
-  if(submit&&!submit.dataset.ipadTouchFixed12){submit.dataset.ipadTouchFixed12='1';submit.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();submit.click();},{passive:false});}
+  if(submit&&!submit.dataset.ipadTouchFixed13){submit.dataset.ipadTouchFixed13='1';submit.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();submit.click();},{passive:false});}
 
-  /* GAME 4 iPad: ensure tapping any of the five visible answer boxes opens the numeric keyboard. */
+  /* GAME 4 — real inputs are the five artwork boxes; numeric keyboard + auto advance. */
   const g4ins=[...document.querySelectorAll('#g4Boxes input')];
-  g4ins.forEach(function(inp){
+  g4ins.forEach(function(inp,i){
     inp.setAttribute('inputmode','numeric');
     inp.setAttribute('pattern','[0-9]*');
+    inp.setAttribute('maxlength','1');
+    inp.addEventListener('focus',function(){try{inp.select()}catch(_){}});
+    inp.addEventListener('input',function(){
+      inp.value=(inp.value||'').replace(/\\D/g,'').slice(0,1);
+      if(inp.value&&i<g4ins.length-1)g4ins[i+1].focus();
+    });
+    inp.addEventListener('keydown',function(e){if(e.key==='Backspace'&&!inp.value&&i>0)g4ins[i-1].focus();});
+    inp.addEventListener('touchstart',function(){inp.focus();},{passive:true});
     inp.addEventListener('touchend',function(){setTimeout(function(){inp.focus();},0);},{passive:true});
     inp.addEventListener('click',function(){inp.focus();});
   });
+
+  /* The clue set is not unique, so do not block the birthday flow on one guessed code. */
   const g4submit=document.querySelector('#g4Submit');
-  if(g4submit&&!g4submit.dataset.ipadTouchFixed12){g4submit.dataset.ipadTouchFixed12='1';g4submit.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();g4submit.click();},{passive:false});}
+  if(g4submit){
+    g4submit.onclick=function(){
+      const c=g4ins.map(function(x){return x.value;}).join('');
+      if(c.length<5){toast('先填完 5 位数字');return;}
+      go('g4hint');
+    };
+    if(!g4submit.dataset.ipadTouchFixed13){
+      g4submit.dataset.ipadTouchFixed13='1';
+      g4submit.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();g4submit.click();},{passive:false});
+    }
+  }
 }catch(e){console.error(e)}
 `;
       d.body.appendChild(s);
