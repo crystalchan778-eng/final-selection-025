@@ -9,7 +9,7 @@
 <style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#171717}#game{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:#171717}</style>
 </head>
 <body>
-<iframe id="game" src="/Index.html?v=line-dog-ui-fix-6" allow="autoplay; fullscreen"></iframe>
+<iframe id="game" src="/Index.html?v=line-dog-ui-fix-7" allow="autoplay; fullscreen"></iframe>
 <script>
 (function(){
   const frame=document.getElementById('game');
@@ -35,6 +35,17 @@
 /* Game 1 hint — keep the artwork button only. The real button becomes a transparent tap target instead of a second pink overlay. */
 .invisibleArtworkHit,.invisibleArtworkHit:hover,.invisibleArtworkHit:active,.invisibleArtworkHit:focus{background:rgba(255,255,255,.001)!important;background-image:none!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important}
 .invisibleArtworkHit::before,.invisibleArtworkHit::after{display:none!important;content:none!important}
+
+/* GAME 3 — the original live card was missing position:absolute, so it flowed into the upper-left and the visible artwork buttons were not the real controls. */
+#g3 .g3-card{position:absolute!important;z-index:14!important;left:21.5%!important;top:26.4%!important;width:56.2%!important;height:61%!important;box-sizing:border-box!important;overflow:hidden!important;background:#fffbee!important;border-radius:36px!important;padding:2.6% 4% 2.7%!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;pointer-events:auto!important}
+#g3 .g3-media{flex:0 0 49%!important;min-height:0!important}
+#g3 .g3-options{position:relative!important;z-index:18!important;pointer-events:auto!important}
+#g3 .g3-option{position:relative!important;z-index:19!important;pointer-events:auto!important;touch-action:manipulation!important}
+#g3 #g3Submit{position:absolute!important;z-index:40!important;left:38%!important;top:85.1%!important;width:24%!important;height:8.1%!important;background:rgba(255,255,255,.001)!important;background-image:none!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;font-size:0!important;pointer-events:auto!important;touch-action:manipulation!important}
+#g3 #g3Submit::before,#g3 #g3Submit::after{display:none!important;content:none!important}
+#g3 #g3Back{z-index:45!important;background:rgba(255,255,255,.001)!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;pointer-events:auto!important}
+#g3 #g3Badge{z-index:45!important;background:transparent!important;border:0!important;box-shadow:none!important;color:#17427b!important;font-weight:1000!important;pointer-events:none!important}
+#g3 #shells{display:none!important}
 `;
       d.head.appendChild(style);
 
@@ -57,26 +68,16 @@ try{
 
   const g2el=document.querySelector('#g2');
   if(g2el){
-    /* cover the old number + square-box columns without touching the word text */
     ['s1','s2'].forEach(function(c){const strip=document.createElement('div');strip.className='g2CleanStrip '+c;g2el.appendChild(strip);});
-
-    /* exact centres of the approved underscores in the 1448×1086 artwork */
     const ys=[41.943,46.087,50.276,54.466,58.711,62.937,67.081];
     [48.343,75.518].forEach(function(x){ys.forEach(function(y){const u=document.createElement('div');u.className='g2Underline';u.style.left=x+'%';u.style.top=(y+1.28)+'%';g2el.appendChild(u);});});
-
     [1,2].forEach(function(group){
       const x=group===1?48.343:75.518;
       const inputs=[...document.querySelectorAll('.letterBox[data-group="'+group+'"]')];
-      inputs.forEach(function(inp,i){
-        g2el.appendChild(inp);
-        inp.classList.add('preciseG2Input');
-        inp.style.left=x+'%';
-        inp.style.top=ys[i]+'%';
-      });
+      inputs.forEach(function(inp,i){g2el.appendChild(inp);inp.classList.add('preciseG2Input');inp.style.left=x+'%';inp.style.top=ys[i]+'%';});
     });
   }
 
-  /* Remove the duplicate visible button on the fridge/cupboard hint screen but keep its click action. */
   const hideHintButton=function(){
     [...document.querySelectorAll('button,a,[role="button"]')].forEach(function(el){
       const t=(el.textContent||'').replace(/\\s+/g,'');
