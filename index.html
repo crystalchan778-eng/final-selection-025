@@ -9,7 +9,7 @@
 <style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#171717}#game{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:#171717}</style>
 </head>
 <body>
-<iframe id="game" src="/Index.html?v=line-dog-ui-fix-11" allow="autoplay; fullscreen"></iframe>
+<iframe id="game" src="/Index.html?v=line-dog-ui-fix-12" allow="autoplay; fullscreen"></iframe>
 <script>
 (function(){
   const frame=document.getElementById('game');
@@ -18,7 +18,7 @@
       const d=frame.contentDocument;
       const style=d.createElement('style');
       style.textContent=`
-/* GAME 2 — keep previous approved alignment patch */
+/* GAME 2 — keep previous alignment patch */
 #g2 .g2-card{inset:0!important;left:0!important;top:0!important;width:100%!important;height:100%!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;pointer-events:none!important}
 #g2 .g2-title{display:none!important}
 #g2 .g2-groups{display:none!important}
@@ -32,7 +32,7 @@
 #g2 .g2-submit{position:absolute!important;left:51.9%!important;top:81.05%!important;width:24.1%!important;height:6.9%!important;border:0!important;background:rgba(255,255,255,.001)!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;font-size:0!important;z-index:40!important;pointer-events:auto!important}
 #g2 .preciseG2Input{position:absolute!important;transform:translate(-50%,-50%)!important;width:2.25%!important;height:3.6%!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important;text-align:center!important;font-size:clamp(16px,1.6vw,24px)!important;font-weight:900!important;line-height:1!important;color:#5a3327!important;z-index:35!important;pointer-events:auto!important;caret-color:#5a3327!important}
 
-/* Game 1 hint — artwork remains visible; real control is only a tap target */
+/* Game 1 hint */
 .invisibleArtworkHit,.invisibleArtworkHit:hover,.invisibleArtworkHit:active,.invisibleArtworkHit:focus{background:rgba(255,255,255,.001)!important;background-image:none!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important}
 .invisibleArtworkHit::before,.invisibleArtworkHit::after{display:none!important;content:none!important}
 
@@ -42,11 +42,7 @@
 #g3 .g3-question{margin-top:.7%!important;margin-bottom:.55%!important}
 #g3 .g3-options{position:relative!important;z-index:18!important;pointer-events:auto!important}
 #g3 .g3-option{position:relative!important;z-index:19!important;pointer-events:auto!important;touch-action:manipulation!important}
-
-/* Remove ONLY the live duplicate badge. The original number baked into each approved Game 3 artwork remains. */
 #g3 #g3Badge{display:none!important}
-
-/* Q2: keep face/lips in the visible crop. The center play icon disappears as soon as playback starts. */
 #g3.g3-q2 .g3-card{top:27.9%!important;height:56.4%!important;padding-top:1.35%!important}
 #g3.g3-q2 .g3-media{flex:0 0 49%!important;z-index:24!important}
 #g3.g3-q2 .g3-media video{object-fit:cover!important;object-position:center 63%!important;transform:none!important}
@@ -54,66 +50,33 @@
 #g3.g3-q2 .g3-options.two{gap:1.2%!important}
 #g3.g3-q2 .videoToggle.videoPlaying{display:none!important}
 #g3.g3-q2 .mutePill{bottom:2%!important;right:2%!important;font-size:clamp(10px,1.05vw,15px)!important;padding:.35em .65em!important;opacity:.78!important}
-
-/* Q3: no CSS blur rectangle. The image itself contains a perspective-shaped blur only on the iPad screen. */
 #g3.g3-q3 .g3-media img{object-fit:cover!important;object-position:center 48%!important}
 
-/* Q5 + Q6: landscape split layout.
-   LEFT = full portrait photo, never cropped.
-   RIGHT = question + four answers stacked from top to bottom. */
-#g3.g3-q5 .g3-card,#g3.g3-q6 .g3-card{
-  left:20.3%!important;top:28.2%!important;width:59.4%!important;height:56.4%!important;
-  padding:2.0% 2.1%!important;
-  display:grid!important;
-  grid-template-columns:43% 53%!important;
-  grid-template-rows:auto 1fr!important;
-  grid-template-areas:"media question" "media options"!important;
-  column-gap:4%!important;row-gap:2%!important;
-  align-items:stretch!important;
-  overflow:hidden!important;
-}
-#g3.g3-q5 .g3-media,#g3.g3-q6 .g3-media{
-  grid-area:media!important;
-  width:100%!important;height:100%!important;min-height:0!important;
-  display:flex!important;align-items:center!important;justify-content:center!important;
-  background:#f3eadc!important;border-radius:22px!important;overflow:hidden!important;
-  border:2px solid rgba(54,139,202,.45)!important;
-}
-#g3.g3-q5 .g3-media img,#g3.g3-q6 .g3-media img{
-  width:100%!important;height:100%!important;
-  object-fit:contain!important;object-position:center center!important;
-  background:#f3eadc!important;
-}
-#g3.g3-q5 .g3-question,#g3.g3-q6 .g3-question{
-  grid-area:question!important;
-  margin:0!important;padding:0 1%!important;
-  align-self:end!important;
-  font-size:clamp(15px,1.65vw,24px)!important;
-  line-height:1.22!important;
-  text-align:center!important;
-}
-#g3.g3-q5 .g3-options,#g3.g3-q6 .g3-options{
-  grid-area:options!important;
-  width:100%!important;height:100%!important;
-  display:flex!important;flex-direction:column!important;
-  justify-content:flex-start!important;align-items:stretch!important;
-  gap:6%!important;margin:0!important;padding:2% 0 0!important;
-  box-sizing:border-box!important;
-}
-#g3.g3-q5 .g3-option,#g3.g3-q6 .g3-option{
-  width:100%!important;min-height:18%!important;height:auto!important;
-  margin:0!important;padding:2.2% 5%!important;
-  display:flex!important;align-items:center!important;justify-content:flex-start!important;
-  text-align:left!important;
-  font-size:clamp(13px,1.35vw,20px)!important;line-height:1.2!important;
-  border-radius:999px!important;
-}
-
-/* Submit: invisible real button aligned exactly over the pink button already in the artwork. */
+/* Q5 + Q6 split layout */
+#g3.g3-q5 .g3-card,#g3.g3-q6 .g3-card{left:20.3%!important;top:28.2%!important;width:59.4%!important;height:56.4%!important;padding:2.0% 2.1%!important;display:grid!important;grid-template-columns:43% 53%!important;grid-template-rows:auto 1fr!important;grid-template-areas:"media question" "media options"!important;column-gap:4%!important;row-gap:2%!important;align-items:stretch!important;overflow:hidden!important}
+#g3.g3-q5 .g3-media,#g3.g3-q6 .g3-media{grid-area:media!important;width:100%!important;height:100%!important;min-height:0!important;display:flex!important;align-items:center!important;justify-content:center!important;background:#f3eadc!important;border-radius:22px!important;overflow:hidden!important;border:2px solid rgba(54,139,202,.45)!important}
+#g3.g3-q5 .g3-media img,#g3.g3-q6 .g3-media img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center center!important;background:#f3eadc!important}
+#g3.g3-q5 .g3-question,#g3.g3-q6 .g3-question{grid-area:question!important;margin:0!important;padding:0 1%!important;align-self:end!important;font-size:clamp(15px,1.65vw,24px)!important;line-height:1.22!important;text-align:center!important}
+#g3.g3-q5 .g3-options,#g3.g3-q6 .g3-options{grid-area:options!important;width:100%!important;height:100%!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:stretch!important;gap:6%!important;margin:0!important;padding:2% 0 0!important;box-sizing:border-box!important}
+#g3.g3-q5 .g3-option,#g3.g3-q6 .g3-option{width:100%!important;min-height:18%!important;height:auto!important;margin:0!important;padding:2.2% 5%!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;text-align:left!important;font-size:clamp(13px,1.35vw,20px)!important;line-height:1.2!important;border-radius:999px!important}
 #g3 #g3Submit{position:absolute!important;z-index:120!important;left:38%!important;top:85.1%!important;width:24%!important;height:8.1%!important;box-sizing:border-box!important;background:rgba(255,255,255,.001)!important;background-image:none!important;border:0!important;border-radius:999px!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;font-size:0!important;outline:none!important;pointer-events:auto!important;touch-action:manipulation!important;-webkit-appearance:none!important;appearance:none!important}
 #g3 #g3Submit::before,#g3 #g3Submit::after{display:none!important;content:none!important}
 #g3 #g3Back{z-index:45!important;background:rgba(255,255,255,.001)!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;pointer-events:auto!important}
 #g3 #shells{display:none!important}
+
+/* GAME 4 — use ONLY the approved artwork visually. Remove every duplicate live layer. */
+#g4 .badge{display:none!important}
+#g4 .g4-card{position:absolute!important;inset:0!important;left:0!important;top:0!important;width:100%!important;height:100%!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important;pointer-events:none!important}
+#g4 #codeTop,#g4 #clues{display:none!important}
+#g4 .g4-entry{position:absolute!important;inset:0!important;left:0!important;top:0!important;width:100%!important;height:100%!important;margin:0!important;padding:0!important;display:block!important;pointer-events:none!important}
+/* The five REAL inputs sit inside the five dashed boxes already drawn in the artwork. */
+#g4 #g4Boxes{position:absolute!important;left:35.5%!important;top:75.7%!important;width:29.5%!important;height:8.7%!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:2.3%!important;z-index:50!important;pointer-events:auto!important}
+#g4 #g4Boxes input{width:100%!important;height:100%!important;min-width:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important;text-align:center!important;font-size:clamp(20px,2.45vw,32px)!important;font-weight:900!important;line-height:1!important;color:#5a3327!important;caret-color:#5a3327!important;pointer-events:auto!important;touch-action:manipulation!important}
+/* The artwork already contains the pink submit button; this is only its invisible tap target. */
+#g4 #g4Submit{position:absolute!important;left:65.3%!important;top:75.4%!important;width:16.4%!important;height:9.2%!important;margin:0!important;padding:0!important;border:0!important;border-radius:999px!important;background:rgba(255,255,255,.001)!important;background-image:none!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;font-size:0!important;outline:none!important;-webkit-appearance:none!important;appearance:none!important;z-index:55!important;pointer-events:auto!important;touch-action:manipulation!important}
+#g4 #g4Submit::before,#g4 #g4Submit::after{display:none!important;content:none!important}
+/* Artwork already has the back icon too. Keep the real button tappable but invisible. */
+#g4 .back{background:rgba(255,255,255,.001)!important;border:0!important;box-shadow:none!important;color:transparent!important;text-shadow:none!important;z-index:60!important}
 `;
       d.head.appendChild(style);
 
@@ -121,7 +84,6 @@
       s.textContent=`
 try{
   g1[3].answers=['如胶似漆'];
-  /* Correct Q3 image: blur follows the actual tilted iPad screen, not a square overlay. */
   g3[2].src='/assets/game3_q3_ipad_blur.jpg?v=10';
 
   state.g1=0;
@@ -163,58 +125,34 @@ try{
     const v=document.querySelector('#lipVideo');
     const btn=document.querySelector('#videoToggle');
     if(!v||!btn) return;
-    v.muted=true;
-    v.setAttribute('playsinline','');
-    v.setAttribute('webkit-playsinline','');
-    v.controls=false;
-    const sync=function(){
-      const playing=!v.paused && !v.ended;
-      btn.classList.toggle('videoPlaying',playing);
-      if(!playing) btn.textContent='▶';
-    };
-    btn.onclick=function(e){
-      e.preventDefault();e.stopPropagation();
-      if(v.paused || v.ended){
-        const p=v.play();
-        if(p&&p.then) p.then(sync).catch(function(){sync();});
-      }else{v.pause();sync();}
-    };
-    v.onclick=function(){
-      if(v.paused || v.ended){
-        const p=v.play();
-        if(p&&p.then) p.then(sync).catch(function(){sync();});
-      }else{v.pause();sync();}
-    };
-    v.onplay=sync;
-    v.onpause=sync;
-    v.onended=sync;
-    sync();
+    v.muted=true;v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');v.controls=false;
+    const sync=function(){const playing=!v.paused&&!v.ended;btn.classList.toggle('videoPlaying',playing);if(!playing)btn.textContent='▶';};
+    btn.onclick=function(e){e.preventDefault();e.stopPropagation();if(v.paused||v.ended){const p=v.play();if(p&&p.then)p.then(sync).catch(sync)}else{v.pause();sync();}};
+    v.onclick=function(){if(v.paused||v.ended){const p=v.play();if(p&&p.then)p.then(sync).catch(sync)}else{v.pause();sync();}};
+    v.onplay=sync;v.onpause=sync;v.onended=sync;sync();
   };
 
-  /* Re-apply per-question classes after every Game 3 render. */
   const originalRenderG3=renderG3;
   renderG3=function(){
     originalRenderG3();
     const screen=document.querySelector('#g3');
-    if(screen){
-      screen.classList.toggle('g3-q2',state.g3===1);
-      screen.classList.toggle('g3-q3',state.g3===2);
-      screen.classList.toggle('g3-q5',state.g3===4);
-      screen.classList.toggle('g3-q6',state.g3===5);
-    }
-    if(state.g3===1) setupVideoQ2();
+    if(screen){screen.classList.toggle('g3-q2',state.g3===1);screen.classList.toggle('g3-q3',state.g3===2);screen.classList.toggle('g3-q5',state.g3===4);screen.classList.toggle('g3-q6',state.g3===5);}
+    if(state.g3===1)setupVideoQ2();
   };
 
-  /* iPad touch: use the same real submit button, but prevent the synthetic second click. */
   const submit=document.querySelector('#g3Submit');
-  if(submit && !submit.dataset.ipadTouchFixed11){
-    submit.dataset.ipadTouchFixed11='1';
-    submit.addEventListener('touchend',function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      submit.click();
-    },{passive:false});
-  }
+  if(submit&&!submit.dataset.ipadTouchFixed12){submit.dataset.ipadTouchFixed12='1';submit.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();submit.click();},{passive:false});}
+
+  /* GAME 4 iPad: ensure tapping any of the five visible answer boxes opens the numeric keyboard. */
+  const g4ins=[...document.querySelectorAll('#g4Boxes input')];
+  g4ins.forEach(function(inp){
+    inp.setAttribute('inputmode','numeric');
+    inp.setAttribute('pattern','[0-9]*');
+    inp.addEventListener('touchend',function(){setTimeout(function(){inp.focus();},0);},{passive:true});
+    inp.addEventListener('click',function(){inp.focus();});
+  });
+  const g4submit=document.querySelector('#g4Submit');
+  if(g4submit&&!g4submit.dataset.ipadTouchFixed12){g4submit.dataset.ipadTouchFixed12='1';g4submit.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();g4submit.click();},{passive:false});}
 }catch(e){console.error(e)}
 `;
       d.body.appendChild(s);
